@@ -2,27 +2,30 @@ package xyz.thepathfinder.simulatedannealing;
 
 import java.util.Random;
 
-public class Solver {
+public class Solver<T extends SearchState<T>> {
+    final Problem<T> problem;
     final Scheduler scheduler;
     final Random random = new Random();
 
-    public Solver(Scheduler scheduler) {
+    public Solver(Problem<T> problem, Scheduler scheduler) {
+        this.problem = problem;
         this.scheduler = scheduler;
     }
 
-    public <T> SearchState<T> solve(SearchState<T> currentState) {
-        SearchState<T> minState = currentState;
+    public T solve() {
+        T currentState = problem.initialState();
+        T minState = currentState;
         int steps = 0;
         while (true) {
             double temperature = scheduler.getTemperature(steps++);
             if (temperature <= 0.0) {
                 return minState;
             }
-            SearchState<T> nextState = currentState.step();
-            double energyChange = nextState.energy() - currentState.energy();
-            if (accept(temperature, energyChange)) {
+            T nextState = currentState.step();
+            double energyChange = problem.energy(nextState) - problem.energy(currentState);
+            if (acceptChange(temperature, energyChange)) {
                 currentState = nextState;
-                if (currentState.energy() < minState.energy()) {
+                if (problem.energy(currentState) < problem.energy(minState)) {
                     minState = currentState;
                 }
             }
@@ -30,7 +33,7 @@ public class Solver {
     }
 
     /** Always accept changes that decrease energy. Otherwise, use the simulated annealing. */
-    private boolean accept(double temperature, double energyChange) {
+    private boolean acceptChange(double temperature, double energyChange) {
         if (energyChange > 0.0) {
             return true;
         } else {
