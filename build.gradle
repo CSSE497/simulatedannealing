@@ -1,0 +1,66 @@
+group 'xyz.thepathfinder'
+version '0.0.1'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+repositories {
+    mavenCentral()
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+artifacts {
+    archives sourceJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Simulated Annealing'
+                packaging 'jar'
+                description 'A simulated annealing framework.'
+                url 'https://github.com/csse497/simulatedannealing'
+
+                scm {
+                    connection 'scm:git:git://github.com/csse497/simulatedannealing'
+                    developerConnection 'scm:git:git://github.com/csse497/simulatedannealing'
+                    url 'https://github.com/csse497/simulatedannealing'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://raw.githubusercontent.com/CSSE497/simulatedannealing/master/LICENSE'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'ajmichael'
+                        name 'Adam Michael'
+                        email 'adam@ajmichael.net'
+                    }
+                }
+            }
+        }
+    }
+}
