@@ -12,7 +12,7 @@ public class Solver<T extends SearchState<T>> {
         this.scheduler = scheduler;
     }
 
-    public T solve() {
+    public T solve() throws InfeasibleProblemException {
         T currentState = problem.initialState();
         T minState = currentState;
         int steps = 0;

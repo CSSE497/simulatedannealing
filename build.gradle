@@ -1,5 +1,5 @@
 group 'xyz.thepathfinder'
-version '0.0.1'
+version '0.0.2'
 
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -7,6 +7,10 @@ apply plugin: 'signing'
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.guava:guava:19.0'
 }
 
 task sourceJar(type: Jar) {
