@@ -34,10 +34,10 @@ public class Solver<T extends SearchState<T>> {
 
     /** Always accept changes that decrease energy. Otherwise, use the simulated annealing. */
     private boolean acceptChange(double temperature, double energyChange) {
-        if (energyChange > 0.0) {
+        if (energyChange < 0.0) {
             return true;
         } else {
-            return random.nextDouble() <= Math.exp(energyChange / temperature);
+            return random.nextDouble() <= Math.exp(-1.0 * energyChange / temperature);
         }
     }
 }
