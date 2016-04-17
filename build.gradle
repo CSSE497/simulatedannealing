@@ -9,6 +9,9 @@ repositories {
     mavenCentral()
 }
 
+def sonauser = hasProperty('ossrhUsername') ? ossrhUsername : ''
+def sonapass = hasProperty('ossrhPassword') ? ossrhPassword : ''
+
 dependencies {
     compile 'com.google.guava:guava:19.0'
 }
@@ -37,11 +40,11 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                authentication(userName: sonauser, password: sonapass)
             }
 
             snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
+                authentication(userName: sonauser, password: sonapass)
             }
 
             pom.project {

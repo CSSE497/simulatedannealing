@@ -1,4 +1,6 @@
 # Simulated Annealing
+[![Build Status](https://img.shields.io/travis/CSSE497/simulatedannealing.svg)](https://travis-ci.org/CSSE497/simulatedannealing)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/xyz.thepathfinder/simulatedannealing/badge.svg)](https://maven-badges.herokuapp.com/maven-central/xyz.thepathfinder/simulatedannealing)
 
 A simple framework for solving optimization problems by simulated annealing.
 

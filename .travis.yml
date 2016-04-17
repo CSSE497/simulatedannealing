@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk8
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+    on_pull_requests: false
+install:
+  - gradle assemble -x signArchives
