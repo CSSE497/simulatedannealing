@@ -29,7 +29,7 @@ Finally, just create a `Solver` and call solve!
 
 ```java
 Scheduler scheduler = new LinearDecayScheduler(INITIAL_TEMPERATURE, NUMBER_OF_STEPS);
-Problem<VRPSearchState> problem = new Problem(...);
+Problem<VRPSearchState> problem = new VehicleRoutingProblem(...);
 Solver<VRPSearchState> solver = new Solver(problem, scheduler);
 VRPSearchState solution = solver.solve();
 ```
